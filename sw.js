@@ -1,4 +1,5 @@
-const CACHE = 'sleep-diary-v2';
+
+const CACHE = 'sleep-diary-v11';
 const ASSETS = [
   './',
   './index.html',
@@ -8,19 +9,14 @@ const ASSETS = [
   './icons/icon-192.png',
   './icons/icon-512.png'
 ];
-
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
   self.skipWaiting();
 });
-
 self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.map(k => k===CACHE ? null : caches.delete(k))))
-  );
+  e.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => k===CACHE ? null : caches.delete(k)))));
   self.clients.claim();
 });
-
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;

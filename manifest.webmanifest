@@ -1,7 +1,7 @@
 {
   "name": "Schlaftagebuch",
   "short_name": "Tagebuch",
-  "description": "Schlaftagebuch – Einträge, Wochen- & Monatsübersichten, offline nutzbar.",
+  "description": "Schlaftagebuch – Einträge, Wochen/Monat, gewichtete Gründe, CSV-Export. Offline nutzbar.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

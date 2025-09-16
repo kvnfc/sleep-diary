@@ -1,18 +1,11 @@
 *{box-sizing:border-box}
-:root{
-  --bg:#f6f8fb; --card:#fff; --ink:#0f172a; --muted:#64748b;
-  --ring:#e6eef6; --accent:#111827; --accent2:#eaeef5; --brand:#0ea5e9;
-}
-html,body{height:100%}
+:root{--bg:#f6f8fb; --card:#fff; --ink:#0f172a; --muted:#64748b; --ring:#e6eef6; --accent:#111827; --accent2:#eaeef5; --brand:#0ea5e9; --safe-bottom: env(safe-area-inset-bottom, 0px)}
 body{margin:0; font-family:system-ui, Segoe UI, Roboto, Arial; color:var(--ink); background:var(--bg)}
-.topbar{position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#ffffffdd,#ffffffcc 70%,transparent); backdrop-filter:saturate(1.2) blur(6px); padding:12px 16px; border-bottom:1px solid #eef2f7}
+.topbar{position:sticky; top:0; z-index:10; background:#fff; padding:12px 16px; border-bottom:1px solid #eef2f7}
 .topbar h1{margin:0 0 8px; font-size:20px}
-.tabs{display:flex; gap:8px; flex-wrap:wrap}
-.tabs button{border:1px solid var(--ring); background:#fff; padding:8px 10px; border-radius:10px; cursor:pointer}
-.tabs button.active{background:var(--accent); color:#fff; border-color:var(--accent)}
-main{max-width:980px; margin:20px auto; padding:0 16px}
+main{max-width:980px; margin:20px auto; padding:0 16px; padding-bottom:76px}
 .card{background:var(--card); border:1px solid var(--ring); border-radius:16px; padding:16px; margin-bottom:14px; box-shadow:0 6px 24px rgba(15,23,42,.06)}
-h3{margin:.2rem 0 10px}
+h3,h4{margin:.2rem 0 10px}
 .row{display:flex; gap:12px; flex-wrap:wrap}
 .g2{gap:16px}
 .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
@@ -24,33 +17,68 @@ input[type="time"],input[type="date"],input[type="number"],textarea{padding:10px
 textarea{resize:vertical}
 .radio{display:flex; gap:14px; align-items:center}
 .chips{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 8px}
-.chips button{border:1px solid var(--ring); background:#fff; padding:8px 10px; border-radius:999px; cursor:pointer}
+.chips button{border:1px solid var(--ring); background:#fff; padding:8px 10px; border-radius:999px; cursor:pointer; color:#334155; font-weight:600; display:inline-flex; align-items:center; gap:6px; padding-right:10px}
 .chips button.active{background:#eef2ff; border-color:#c7d2fe}
+.chips .meter{display:inline-flex; gap:4px; margin-left:6px}
+.chips .dot{width:10px;height:10px;border-radius:50%; background:#e2e8f0}
+.chips button.active .dot.on{background:#0ea5e9}
+.chips .step{margin-left:6px; font-weight:800; border-radius:6px; padding:0 6px; background:#eef2f7; color:#111827; border:1px solid var(--ring)}
 .checks{display:flex; flex-direction:column; gap:8px}
 .actions{display:flex; gap:10px; justify-content:flex-start; margin:10px 0 24px}
 button{border:0; background:var(--accent); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer}
 button.secondary{background:var(--accent2); color:#111827}
 button.ghost{background:transparent; color:#111827; border:1px dashed var(--ring)}
+.toast{margin-left:10px; color:#16a34a; font-weight:600}
 .table{width:100%; border-collapse:collapse}
 .table th,.table td{border:1px solid var(--ring); padding:8px 10px; font-size:14px}
 .table th{background:#f2f5fa; text-align:left}
 .table-wrap{overflow:auto}
 .summary{display:flex; gap:12px; flex-wrap:wrap}
-.badge{padding:6px 10px; background:#eef2ff; border-radius:10px; font-weight:600; font-size:12px}
-.footer{max-width:980px; margin:12px auto 40px; padding:0 16px; color:var(--muted); font-size:13px}
+.footer{max-width:980px; margin:12px auto 40px; padding:0 16px; color:#64748b; font-size:13px}
 .tab{display:none}
 .tab.active{display:block}
-.muted{color:var(--muted); font-size:12px}
-.import input{display:none}
-.import{border:1px solid var(--ring); border-radius:10px; padding:10px 14px; background:#fff; cursor:pointer; display:inline-block}
+.hidden{display:none}
+
 /* Gauge */
-.gauge-wrap{position:relative; width:100%; aspect-ratio:2/1; border:1px dashed #eef2f7; border-radius:14px; background:linear-gradient(180deg,#ffffff,#fafcff)}
+.gauge-wrap{position:relative; width:100%; aspect-ratio:2/1; border:1px dashed #eef2f7; border-radius:14px; background:linear-gradient(180deg,#ffffff,#fafcff); padding-bottom:28px}
 .gauge{width:100%; height:100%}
 .needle{transform-box: fill-box; transform-origin: 50% 100%; transition: transform .08s ease-out}
-.labels{display:flex; justify-content:space-between; margin-top:4px; color:#64748b; font-size:12px}
+.scale{position:absolute; left:10px; right:10px; bottom:6px; display:flex; justify-content:space-between; color:#475569; font-size:12px; opacity:.95}
+.live{position:absolute; top:8px; right:10px; background:#111827; color:#fff; font-size:12px; padding:4px 8px; border-radius:999px}
 
-/* Contrast tweaks */
-.chips button{color:#334155; font-weight:600}
-.chips button.active{color:#111827; background:#e0e7ff; border-color:#c7d2fe}
-.radio label{color:#1f2937}
-input::placeholder, textarea::placeholder{color:#94a3b8}
+/* Visual Week */
+.stats{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
+@media(max-width:840px){.stats{grid-template-columns:1fr}}
+.stat{background:#fff; border:1px solid var(--ring); border-radius:14px; padding:12px}
+.stat h4{margin:0 0 6px; font-size:14px; color:#1f2937}
+.stat .big{font-size:26px; font-weight:800}
+.pills{display:flex; gap:8px; flex-wrap:wrap; margin-top:6px}
+.pill{padding:6px 10px; border-radius:999px; font-size:12px; font-weight:700}
+.pill.good{background:#dcfce7}
+.pill.ok{background:#fef9c3}
+.pill.bad{background:#fee2e2}
+.badge{display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:700}
+.badge.good{background:#dcfce7}
+.badge.ok{background:#fef9c3}
+.badge.bad{background:#fee2e2}
+.progress{height:10px; border-radius:8px; background:#eef2f7; overflow:hidden; margin-top:8px}
+.progress > b{display:block; height:100%; background:#0ea5e9}
+.cardlist{display:flex; flex-direction:column; gap:10px}
+.item{display:flex; justify-content:space-between; align-items:center; border:1px solid var(--ring); background:#fff; padding:10px 12px; border-radius:12px}
+.item .left{display:flex; align-items:center; gap:10px}
+.item .count{font-weight:800}
+
+/* Bottom Tab-Bar */
+.bottombar{
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 60px; padding-bottom: var(--safe-bottom);
+  background:#fff; border-top:1px solid #e6eef6;
+  display:flex; justify-content:space-around; align-items:center;
+  z-index: 20;
+}
+.bottombar a{
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  font-size:12px; color:#334155; text-decoration:none; padding:6px 10px; border-radius:10px;
+}
+.bottombar a.active{ color:#111827; font-weight:700; background:#f3f4f6; }
+.bottombar a span{ line-height:1; }
