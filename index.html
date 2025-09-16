@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Schlaftagebuch</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-512.png">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>Schlaftagebuch</h1>
+    <nav class="tabs" id="tabs">
+      <button data-tab="entry" class="active">Eintrag</button>
+      <button data-tab="week">Woche</button>
+      <button data-tab="month">Monat</button>
+      <button data-tab="settings">Einstellungen</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Eintrag -->
+    <section id="entry" class="tab active">
+      <div class="card">
+        <div class="row g2">
+          <div class="col">
+            <label>Datum</label>
+            <input type="date" id="dateInput">
+          </div>
+          <div class="col">
+            <label>Zu Bett</label>
+            <input type="time" id="bedTime">
+          </div>
+          <div class="col">
+            <label>Eingeschlafen (ca.)</label>
+            <input type="time" id="asleepTime">
+          </div>
+          <div class="col">
+            <label>Aufgewacht</label>
+            <input type="time" id="wakeTime">
+          </div>
+          <div class="col">
+            <label>Aufgestanden</label>
+            <input type="time" id="upTime">
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>2. Schlafqualität</h3>
+          <div id="gaugeQuality" class="gauge-wrap"></div>
+        </div>
+        <div class="card">
+          <h3>5. Morgendliches Befinden</h3>
+          <div id="gaugeFeeling" class="gauge-wrap"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>3. Tagschlaf</h3>
+        <div class="row g2">
+          <div class="col">
+            <label>Tagschlaf?</label>
+            <div class="radio">
+              <label><input type="radio" name="nap" value="yes"> Ja</label>
+              <label><input type="radio" name="nap" value="no" checked> Nein</label>
+            </div>
+          </div>
+          <div class="col">
+            <label>Wann?</label>
+            <input type="time" id="napWhen">
+          </div>
+          <div class="col">
+            <label>Wie lange (Minuten)?</label>
+            <input type="number" id="napDuration" min="0" step="5" placeholder="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>4. Aufwachen in der Nacht</h3>
+        <div class="row g2">
+          <div class="col">
+            <label>Aufgewacht?</label>
+            <div class="radio">
+              <label><input type="radio" name="awake" value="yes"> Ja</label>
+              <label><input type="radio" name="awake" value="no" checked> Nein</label>
+            </div>
+          </div>
+          <div class="col">
+            <label>Wie oft (circa)?</label>
+            <input type="number" id="awakeCount" min="0" max="10" step="1" placeholder="0">
+          </div>
+        </div>
+        <label>Gründe (Mehrfachauswahl):</label>
+        <div class="chips" id="reasons">
+          <button data-val="toilet">Toilettengang</button>
+          <button data-val="rumination">Grübeln/Sorgen</button>
+          <button data-val="temp">Temperatur (zu warm/kalt)</button>
+          <button data-val="discomfort">Unbequemlichkeit</button>
+          <button data-val="noiseLight">Geräusche/Licht</button>
+        </div>
+
+        <label>Notizen (ohne Uhrzeiten):</label>
+        <textarea id="nightNotes" rows="3" placeholder="Kurze Notizen..."></textarea>
+      </div>
+
+      <div class="card">
+        <div class="grid-3">
+          <div>
+            <h3>6. Trinkverhalten</h3>
+            <div class="radio">
+              <label><input type="radio" name="drink20" value="yes"> Nach 20 Uhr getrunken</label>
+              <label><input type="radio" name="drink20" value="no" checked> Nein</label>
+            </div>
+            <label>Menge (ml)</label>
+            <input type="number" id="drinkMl" min="0" step="50" placeholder="0">
+          </div>
+          <div>
+            <h3>7. Einschlafrituale</h3>
+            <div class="chips" id="rituals">
+              <button data-val="read">Gelesen</button>
+              <button data-val="music">Beruhigende Musik</button>
+              <button data-val="breathing">Atemübungen/Meditieren</button>
+              <button data-val="warmShower">Warme Dusche</button>
+            </div>
+          </div>
+          <div>
+            <h3>Extras</h3>
+            <div class="checks">
+              <label><input type="checkbox" id="caffeineEvening"> Koffein spät</label>
+              <label><input type="checkbox" id="screenTimeLate"> Späte Screen-Time</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="saveEntry">Speichern</button>
+        <button class="secondary" id="newEntry">Neu</button>
+        <button class="ghost" id="deleteEntry">Eintrag löschen</button>
+      </div>
+    </section>
+
+    <!-- Woche -->
+    <section id="week" class="tab">
+      <div class="card">
+        <h3>Wochenübersicht</h3>
+        <div id="weekSummary" class="summary"></div>
+        <div id="weekTableWrap" class="table-wrap"></div>
+      </div>
+    </section>
+
+    <!-- Monat -->
+    <section id="month" class="tab">
+      <div class="card">
+        <h3>Monatsübersicht</h3>
+        <div id="monthHeatmap" class="heatmap"></div>
+        <div id="monthTrends" class="summary"></div>
+      </div>
+    </section>
+
+    <!-- Einstellungen -->
+    <section id="settings" class="tab">
+      <div class="card">
+        <h3>Daten</h3>
+        <div class="row g2">
+          <button id="exportJson">Export (JSON)</button>
+          <label class="import">
+            <input type="file" id="importJson" accept="application/json"> Import (JSON)
+          </label>
+          <button class="secondary" id="clearAll">Alle Daten löschen</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Erinnerungen (nur lokal)</h3>
+        <div class="row g2">
+          <div class="col">
+            <label>Abend-Reminder</label>
+            <input type="time" id="reminderEvening">
+          </div>
+          <div class="col">
+            <label>Morgen-Reminder</label>
+            <input type="time" id="reminderMorning">
+          </div>
+        </div>
+        <p class="muted">Hinweis: Erinnerungen werden als lokale Browser-Benachrichtigungen geplant (wenn du zustimmst).</p>
+        <button id="enableNotifs">Benachrichtigungen aktivieren</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Offline-fähige App (PWA). Deine Daten bleiben lokal.</span>
+  </footer>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js');
+      });
+    }
+  </script>
+</body>
+</html>

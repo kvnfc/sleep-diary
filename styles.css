@@ -1,0 +1,56 @@
+*{box-sizing:border-box}
+:root{
+  --bg:#f6f8fb; --card:#fff; --ink:#0f172a; --muted:#64748b;
+  --ring:#e6eef6; --accent:#111827; --accent2:#eaeef5; --brand:#0ea5e9;
+}
+html,body{height:100%}
+body{margin:0; font-family:system-ui, Segoe UI, Roboto, Arial; color:var(--ink); background:var(--bg)}
+.topbar{position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#ffffffdd,#ffffffcc 70%,transparent); backdrop-filter:saturate(1.2) blur(6px); padding:12px 16px; border-bottom:1px solid #eef2f7}
+.topbar h1{margin:0 0 8px; font-size:20px}
+.tabs{display:flex; gap:8px; flex-wrap:wrap}
+.tabs button{border:1px solid var(--ring); background:#fff; padding:8px 10px; border-radius:10px; cursor:pointer}
+.tabs button.active{background:var(--accent); color:#fff; border-color:var(--accent)}
+main{max-width:980px; margin:20px auto; padding:0 16px}
+.card{background:var(--card); border:1px solid var(--ring); border-radius:16px; padding:16px; margin-bottom:14px; box-shadow:0 6px 24px rgba(15,23,42,.06)}
+h3{margin:.2rem 0 10px}
+.row{display:flex; gap:12px; flex-wrap:wrap}
+.g2{gap:16px}
+.grid-2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.grid-3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px}
+@media(max-width:840px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.col{display:flex; flex-direction:column; gap:6px; min-width:160px}
+label{font-size:13px; color:var(--muted)}
+input[type="time"],input[type="date"],input[type="number"],textarea{padding:10px 12px; border:1px solid var(--ring); border-radius:10px; background:#fff; font-size:14px}
+textarea{resize:vertical}
+.radio{display:flex; gap:14px; align-items:center}
+.chips{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 8px}
+.chips button{border:1px solid var(--ring); background:#fff; padding:8px 10px; border-radius:999px; cursor:pointer}
+.chips button.active{background:#eef2ff; border-color:#c7d2fe}
+.checks{display:flex; flex-direction:column; gap:8px}
+.actions{display:flex; gap:10px; justify-content:flex-start; margin:10px 0 24px}
+button{border:0; background:var(--accent); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer}
+button.secondary{background:var(--accent2); color:#111827}
+button.ghost{background:transparent; color:#111827; border:1px dashed var(--ring)}
+.table{width:100%; border-collapse:collapse}
+.table th,.table td{border:1px solid var(--ring); padding:8px 10px; font-size:14px}
+.table th{background:#f2f5fa; text-align:left}
+.table-wrap{overflow:auto}
+.summary{display:flex; gap:12px; flex-wrap:wrap}
+.badge{padding:6px 10px; background:#eef2ff; border-radius:10px; font-weight:600; font-size:12px}
+.footer{max-width:980px; margin:12px auto 40px; padding:0 16px; color:var(--muted); font-size:13px}
+.tab{display:none}
+.tab.active{display:block}
+.muted{color:var(--muted); font-size:12px}
+.import input{display:none}
+.import{border:1px solid var(--ring); border-radius:10px; padding:10px 14px; background:#fff; cursor:pointer; display:inline-block}
+/* Gauge */
+.gauge-wrap{position:relative; width:100%; aspect-ratio:2/1; border:1px dashed #eef2f7; border-radius:14px; background:linear-gradient(180deg,#ffffff,#fafcff)}
+.gauge{width:100%; height:100%}
+.needle{transform-box: fill-box; transform-origin: 50% 100%; transition: transform .08s ease-out}
+.labels{display:flex; justify-content:space-between; margin-top:4px; color:#64748b; font-size:12px}
+
+/* Contrast tweaks */
+.chips button{color:#334155; font-weight:600}
+.chips button.active{color:#111827; background:#e0e7ff; border-color:#c7d2fe}
+.radio label{color:#1f2937}
+input::placeholder, textarea::placeholder{color:#94a3b8}
